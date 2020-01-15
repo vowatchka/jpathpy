@@ -350,7 +350,7 @@ JPath <-> JSelection
 Follow table show how JPath expressions equal to ``jpathpy.JSelection`` methods.
 
 ================================ ============================================= ======================================
-JPath                            Python                                        Comment
+JPath expression                 Python                                        Comment
 ================================ ============================================= ======================================
 r'$'                             >>> root                                      root selection
 r'@'                             >>> cur                                       current selection
