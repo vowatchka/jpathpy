@@ -159,6 +159,8 @@ class JSelection():
 			return self._items[idx]
 		except IndexError as ex:
 			raise IndexError("index %s out of range" % idx)
+		except TypeError as ex:
+			raise TypeError("indices must be integers or slices, not %s" % idx.__class__.__name__)
 	
 	def __add__(self, value):
 		"""
@@ -446,11 +448,9 @@ class JSelection():
 			for idx in indices:
 				try: jselection += (self[idx],)
 				except IndexError: pass
-				except: raise TypeError("indices must be integers or slices, not %s" % idx.__class__.__name__)
 		else:
 			try: jselection += (self[indices],) if isinstance(indices, int) else tuple(self[indices])
 			except IndexError: pass
-			except: raise TypeError("indices must be integers or slices, not %s" % indices.__class__.__name__)
 		
 		return self.__class__(*jselection, **self.meta)
 		
@@ -526,56 +526,9 @@ class JSelection():
 		
 		return self.__class__(*map(lambda x : x[1], filter(_, enumerate(self))), **self.meta)
 		
-	def val(self):
-		"""
-		Return value of item in current selection if selection has only 
-		this item and raise exception in other cases.
-		
-		For example:
-		>>> from jpathpy import JSelection
-		>>> d = {"a":[1,2,3], "b":{"a":1}}
-		>>> s = JSelection(d)
-		>>> # select all items by key 'a'
-		>>> items = s.one("a", deep=True)
-		>>> items.tuple()
-		([1, 2, 3], 1)
-		>>> # filter and use method .val() because
-		>>> # current selection in filtering function
-		>>> # has only one item
-		>>> items.filter(lambda idx, cur, root : isinstance(cur.val(), list)).tuple()
-		([1, 2, 3],)
-		>>> # too more items
-		>>> items.val()
-		Traceback (most recent call last):
-		  File "<pyshell#41>", line 1, in <module>
-			items.val()
-		RuntimeError: too more items
-		>>> # not enough items
-		>>> JSelection().val()
-		Traceback (most recent call last):
-		  File "<pyshell#43>", line 1, in <module>
-			JSelection().val()
-		RuntimeError: not enough items
-		
-		:except RuntimeError:
-		    If current selection has not items.
-			
-		:except RuntimeError:
-		    If current selection has more than one items.
-			
-		:return JSelection:
-		"""
-		if not len(self):
-			raise RuntimeError("not enough items")
-		elif len(self) == 1:
-			return self[0]
-		else:
-			raise RuntimeError("too more items")
-		
-	def call4item(self, func, *args, **kwargs):
+	def call4item(self, idx, func, *args, **kwargs):
 		"""
 		Call specified function on item of current selection.
-		Item will be got by method ``.val()``.
 		
 		If some exception will be occurred while processing function 
 		than exception be raised.
@@ -590,26 +543,26 @@ class JSelection():
 		>>> items.tuple()
 		('abcdef', 1)
 		>>> # call function
-		>>> items.i(0).call4item(str.startswith, "abc")
+		>>> items.i(0).call4item(0, str.startswith, "abc")
 		True
-		>>> # RuntimeError because too more items in selection
-		>>> items.call4item(str.startswith, "abc")
-		Traceback (most recent call last):
-		  File "<pyshell#62>", line 1, in <module>
-			items.call4item(str.startswith, "abc")
-		RuntimeError: too more items
 		
+		:param int idx:
+		    Index of item.
+			
 		:param function or lambda func:
 		    Some function that will be called on item of current selection.
-			
+		
 		:param tuple *args:
 		    Function positional arguments.
 			
 		:param dict **kwargs:
 		    Function keyword arguments.
 			
-		:except RuntimeError:
-		    If call of method ``.val()`` raises exception.
+		:except IndexError:
+		    If ``idx`` out of selection range.
+			
+		:except TypeError:
+		    If ``idx`` is invalid.
 			
 		:except Exception:
 		    Other exceptions that can be occurred while processing 
@@ -617,7 +570,7 @@ class JSelection():
 			
 		:return object:
 		"""
-		return func(self.val(), *args, **kwargs)
+		return func(self[idx], *args, **kwargs)
 		
 	def call4items(self, func, *args, **kwargs):
 		"""
@@ -832,12 +785,12 @@ class JPath(object):
 	+--------------------------------+-----------------------------------------+------------------------------------+
 	| r'$[@."key" = "value"]'        | root.filter(                            | available compare operations:      |
 	|                                |       lambda idx, cur, root :           | >, >=, <, <=, =, !=                |
-	|                                |       cur.one("key").val() == "value"   |                                    |
+	|                                |       cur.one("key")[0] == "value"      |                                    |
 	|                                |   )                                     |                                    |
 	+--------------------------------+-----------------------------------------+------------------------------------+
 	| r'$[@."key" + 1 > 3]'          | root.filter(                            | available math operations:         |
 	|                                |       lambda idx, cur, root :           | +, -, /, *, %                      |
-	|                                |       cur.one("key").val() + 1 > 3      |                                    |
+	|                                |       cur.one("key")[0] + 1 > 3         |                                    |
 	|                                |   )                                     |                                    |
 	+--------------------------------+-----------------------------------------+------------------------------------+
 	| r'$[@."key" and $.."someKey"]' | root.filter(                            | available logic operations:        |

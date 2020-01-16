@@ -209,7 +209,7 @@ def parse(expr, start, output_dir=None, write_output=False, lextab=None, tabmodu
 		if str(p.slice[2]) == "expression":
 			p[0] = get_str_from_parsing(p)
 		else:
-			p[0] = p[1] + p[2]+".val()"
+			p[0] = p[1] + p[2]+"[0]"
 		
 	def p_expression_math(p):
 		"""expression : jpath PLUS jpath
@@ -234,9 +234,9 @@ def parse(expr, start, output_dir=None, write_output=False, lextab=None, tabmodu
 					  | expression MOD expression"""
 		# rule for parsing an arithmetic operations
 		if str(p.slice[1]) == "jpath":
-			p[0] = "%s %s %s" % (p[1]+".val()", p[2], p[3])
+			p[0] = "%s %s %s" % (p[1]+"[0]", p[2], p[3])
 		elif str(p.slice[3]) == "jpath":
-			p[0] = "%s %s %s" % (p[1], p[2], p[3]+".val()")
+			p[0] = "%s %s %s" % (p[1], p[2], p[3]+"[0]")
 		else:
 			p[0] = "%s %s %s" % (p[1], p[2], p[3])
 		
@@ -272,9 +272,9 @@ def parse(expr, start, output_dir=None, write_output=False, lextab=None, tabmodu
 					  | expression GE expression"""
 		# rule for parsing a comparation operations
 		if str(p.slice[1]) == "jpath":
-			p[0] = "%s %s %s" % (p[1]+".val()", p[2] if p[2] != "=" else "==", p[3])
+			p[0] = "%s %s %s" % (p[1]+"[0]", p[2] if p[2] != "=" else "==", p[3])
 		elif str(p.slice[3]) == "jpath":
-			p[0] = "%s %s %s" % (p[1], p[2] if p[2] != "=" else "==", p[3]+".val()")
+			p[0] = "%s %s %s" % (p[1], p[2] if p[2] != "=" else "==", p[3]+"[0]")
 		else:
 			p[0] = "%s %s %s" % (p[1], p[2] if p[2] != "=" else "==", p[3])
 		

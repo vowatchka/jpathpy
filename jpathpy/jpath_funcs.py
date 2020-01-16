@@ -52,23 +52,17 @@ class JPathFunctionsWrapper(object):
 		
 	def _getvalue(self, obj):
 		"""
-		Return value of ``obj`` or value of ``obj.val()`` 
-		if ``obj`` is instance of JSelection.
+		Return value of ``obj`` or value of ``obj[0]`` if ``obj`` is instance of ``JSelection``.
 		
 		:param object obj:
-		    If ``obj`` is instance of JSelection, method ``.val()`` 
-		    will be called on instance. In other cases ``obj`` 
-		    will be return.
+		    Object that value will be returned.
 			
-		:except RuntimeError:
-		    If ``obj`` is instance of JSelection and has not items.
-			
-		:except RuntimeError:
-		    If ``obj`` is instance of JSelection and has more than one item.
+		:except IndexError:
+		    If ``obj`` is instance of ``JSelection`` and has not items.
 			
 		:return object:
 		"""
-		return obj.val() if isinstance(obj, jpathpy.JSelection) else obj
+		return obj[0] if isinstance(obj, jpathpy.JSelection) else obj
 
 class JPathFunctions(JPathFunctionsWrapper):
 	"""
@@ -88,7 +82,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return int:
 		"""
-		return int(selection.val())
+		return int(selection[0])
 		
 	@JPathFunctionsWrapper._jpath_function
 	def toflt(self, selection):
@@ -103,7 +97,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return float:
 		"""
-		return float(selection.val())
+		return float(selection[0])
 		
 	@JPathFunctionsWrapper._jpath_function
 	def tostr(self, selection):
@@ -118,22 +112,25 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return str(selection.val())
+		return str(selection[0])
 	
 	@JPathFunctionsWrapper._jpath_function
-	def val(self, selection):
+	def get(self, selection, idx):
 		"""
-		Apply method ``.val()`` on selection.
+		Return item of selection by index.
 		
 		:param JSelection selection:
 		    Selection.
+			
+		:param int or JSelection idx:
+		    Index.
 		
 		:except Exception:
 		    Some exceptions that can be occurred.
 			
 		:return object:
 		"""
-		return selection.val()
+		return selection[self._getvalue(idx)]
 	
 	@JPathFunctionsWrapper._jpath_function
 	def len(self, selection):
@@ -148,7 +145,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return int:
 		"""
-		return len(selection.val())
+		return len(selection[0])
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isnum(self, selection):
@@ -164,7 +161,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		value = selection.val()
+		value = selection[0]
 		return True if not isinstance(value, bool) and isinstance(value, (int, float)) else False
 	
 	@JPathFunctionsWrapper._jpath_function
@@ -181,7 +178,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		value = selection.val()
+		value = selection[0]
 		return True if not isinstance(value, bool) and isinstance(value, int) else False
 	
 	@JPathFunctionsWrapper._jpath_function
@@ -198,7 +195,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), float) else False
+		return True if isinstance(selection[0], float) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isbool(self, selection):
@@ -214,7 +211,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), bool) else False
+		return True if isinstance(selection[0], bool) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isstr(self, selection):
@@ -230,7 +227,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), str) else False
+		return True if isinstance(selection[0], str) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isnull(self, selection):
@@ -246,7 +243,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), type(None)) else False
+		return True if isinstance(selection[0], type(None)) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isarr(self, selection):
@@ -262,7 +259,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), (list, tuple)) else False
+		return True if isinstance(selection[0], (list, tuple)) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isobj(self, selection):
@@ -278,7 +275,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if isinstance(selection.val(), dict) else False
+		return True if isinstance(selection[0], dict) else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def rnd(self, selection, digits):
@@ -296,7 +293,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return float:
 		"""
-		return round(selection.val(), self._getvalue(digits))
+		return round(selection[0], self._getvalue(digits))
 	
 	@JPathFunctionsWrapper._jpath_function
 	def slice(self, selection, start, stop, step):
@@ -320,7 +317,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return iterable:
 		"""
-		return selection.val()[self._getvalue(start) : self._getvalue(stop) : self._getvalue(step)]
+		return selection[0][self._getvalue(start) : self._getvalue(stop) : self._getvalue(step)]
 	
 	@JPathFunctionsWrapper._jpath_function
 	def replace(self, selection, template, replacement):
@@ -341,7 +338,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().replace(self._getvalue(template), self._getvalue(replacement))
+		return selection[0].replace(self._getvalue(template), self._getvalue(replacement))
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isdigit(self, selection):
@@ -356,7 +353,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().isdigit()
+		return selection[0].isdigit()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isalpha(self, selection):
@@ -371,7 +368,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().isalpha()
+		return selection[0].isalpha()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isalnum(self, selection):
@@ -386,7 +383,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().isalnum()
+		return selection[0].isalnum()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def islower(self, selection):
@@ -401,7 +398,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().islower()
+		return selection[0].islower()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isupper(self, selection):
@@ -416,7 +413,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().isupper()
+		return selection[0].isupper()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def isspace(self, selection):
@@ -431,7 +428,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().isspace()
+		return selection[0].isspace()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def istitle(self, selection):
@@ -446,7 +443,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().istitle()
+		return selection[0].istitle()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def lower(self, selection):
@@ -461,7 +458,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().lower()
+		return selection[0].lower()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def upper(self, selection):
@@ -476,7 +473,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().upper()
+		return selection[0].upper()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def startswith(self, selection, template):
@@ -494,7 +491,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().startswith(self._getvalue(template))
+		return selection[0].startswith(self._getvalue(template))
 	
 	@JPathFunctionsWrapper._jpath_function
 	def endswith(self, selection, template):
@@ -512,7 +509,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return selection.val().endswith(self._getvalue(template))
+		return selection[0].endswith(self._getvalue(template))
 	
 	@JPathFunctionsWrapper._jpath_function
 	def capitalize(self, selection):
@@ -527,7 +524,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().capitalize()
+		return selection[0].capitalize()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def ltrim(self, selection):
@@ -542,7 +539,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().lstrip()
+		return selection[0].lstrip()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def rtrim(self, selection):
@@ -557,7 +554,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().rstrip()
+		return selection[0].rstrip()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def trim(self, selection):
@@ -572,7 +569,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().strip()
+		return selection[0].strip()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def title(self, selection):
@@ -587,7 +584,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return selection.val().title()
+		return selection[0].title()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def instr(self, selection, template):
@@ -605,7 +602,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return True if selection.val().find(self._getvalue(template)) != -1 else False
+		return True if selection[0].find(self._getvalue(template)) != -1 else False
 	
 	@JPathFunctionsWrapper._jpath_function
 	def normalize(self, selection):
@@ -621,7 +618,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return str:
 		"""
-		return re.sub(r"\s+", " ", re.sub(r"[\r\n\t\v\f]+", " ", selection.val(), re.I)).strip()
+		return re.sub(r"\s+", " ", re.sub(r"[\r\n\t\v\f]+", " ", selection[0], re.I)).strip()
 	
 	@JPathFunctionsWrapper._jpath_function
 	def count(self, selection):
@@ -720,7 +717,7 @@ class JPathFunctions(JPathFunctionsWrapper):
 			
 		:return bool:
 		"""
-		return self._getvalue(val) in selection.val()
+		return self._getvalue(val) in selection[0]
 		
 	@JPathFunctionsWrapper._jpath_function
 	def initems(self, selection, item):

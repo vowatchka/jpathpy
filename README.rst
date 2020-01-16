@@ -190,29 +190,12 @@ If some exception will be occured while processing filtering function than it no
 >>> authors = s.one("author", deep=True)
 >>> authors.tuple()
 ('Nigel Rees', 'Evelyn Waugh', 'Herman Melville', 'J. R. R. Tolkien', 'Leonardo Da Vinci', 'Edvard Munch', 'Sistine Chapel by Michelangelo', 'Vincent Van Gogh')
->>> authors.filter(lambda idx, cur, root : cur.val().startswith("E")).tuple()
+>>> authors.filter(lambda idx, cur, root : cur[0].startswith("E")).tuple()
 ('Evelyn Waugh', 'Edvard Munch')
 >>> # ("Nigel Rees")[12], ("Evelyn Waugh")[12] and ("Edvard Munch")[12] raise IndexError,
 >>> # but it will be skipped
->>> authors.filter(lambda idx, cur, root : cur.val()[12]).tuple()
+>>> authors.filter(lambda idx, cur, root : cur[0][12]).tuple()
 ('Herman Melville', 'J. R. R. Tolkien', 'Leonardo Da Vinci', 'Sistine Chapel by Michelangelo', 'Vincent Van Gogh')
-
-
-Get value of item of selection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can get value of item in selection by call method ``.val()``. But if selection has more that 1 item or has not items than exception ``RuntimeError`` will be raised.
-
->>> nigel = s.one("author", deep=True).filter(lambda idx, cur, root : cur.val().startswith("Nigel"))
->>> nigel.tuple()
-('Nigel Rees',)
->>> nigel.val()
-'Nigel Rees'
->>> authors = s.one("author", deep=True)
->>> authors.val()
-RuntimeError: too more items
->>> a = s.one("a")
->>> a.val()
-RuntimeError: not enough items
 
 
 Call different functions on selection
@@ -222,14 +205,14 @@ You can call your different functions on selection or on items in selection. Not
 >>> authors = s.one("author", deep=True)
 >>> authors.tuple()
 ('Nigel Rees', 'Evelyn Waugh', 'Herman Melville', 'J. R. R. Tolkien', 'Leonardo Da Vinci', 'Edvard Munch', 'Sistine Chapel by Michelangelo', 'Vincent Van Gogh')
->>> # call function on item that will be got by call method ``.val()``
->>> authors.i(0).call4item(str.__getitem__, 0)
+>>> # get first char of first item
+>>> authors.i(0).call4item(0, str.__getitem__, 0)
 'N'
->>> # call function on all items as iterable
+>>> # get count of items
 >>> authors.call4items(list.__len__)
 8
 >>> # call function on current selection
->>> authors.call4self(jselection.__class__.filter, lambda idx, cur, root : cur.val().startswith("E")).tuple()
+>>> authors.call4self(jselection.__class__.filter, lambda idx, cur, root : cur[0].startswith("E")).tuple()
 ('Evelyn Waugh', 'Edvard Munch')
 
 Also you can call function on each item in selection and get new selection. Note, in this case if some exception will be occured while processing function exception not be raised.
@@ -237,6 +220,7 @@ Also you can call function on each item in selection and get new selection. Note
 >>> authors = s.one("author", deep=True)
 >>> authors.tuple()
 ('Nigel Rees', 'Evelyn Waugh', 'Herman Melville', 'J. R. R. Tolkien', 'Leonardo Da Vinci', 'Edvard Munch', 'Sistine Chapel by Michelangelo', 'Vincent Van Gogh')
+>>> # get string length of each items
 >>> authors.call4each(str.__len__).tuple()
 (17, 12, 30, 16, 10, 12, 15, 16)
 
@@ -371,11 +355,11 @@ r'$[@."key"]'                    >>> root.filter(
                                  >>> )                                           
 r'$[@."key" = "value"]'          >>> root.filter(                              available compare operations:
                                  >>>     lambda idx, cur, root :               ``>``, ``>=``, ``<``, ``<=``,
-                                 >>>         cur.one("key").val() == "value"   ``=``, ``!=``
+                                 >>>         cur.one("key")[0] == "value"   ``=``, ``!=``
                                  >>> )
 r'$[@."key" + 1 > 3]'            >>> root.filter(                              available math operations:
                                  >>>     lambda idx, cur, root :               ``+``, ``-``, ``/``, ``*``,
-                                 >>>         cur.one("key").val() + 1 > 3      ``%``
+                                 >>>         cur.one("key")[0] + 1 > 3      ``%``
                                  >>> )
 r'$[@."key" and $.."someKey"]'   >>> root.filter(                              available logic operations:
                                  >>>     lambda idx, cur, root :               ``and``, ``or``
@@ -405,7 +389,7 @@ You can define your classes methods of which will be used as JPath functions. Al
    First argument of JPath function must be an instance of ``jpathpy.JSelection``.
    
 * ``_getvalue(self, obj)``
-   Return value of ``obj`` or value of ``obj.val()`` if ``obj`` is instance of ``jpathpy.JSelection``.
+   Return value of ``obj`` or value of ``obj[0]`` if ``obj`` is instance of ``JSelection``.
    
 Follow example show how define yourself JPath functions:
 
