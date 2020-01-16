@@ -33,6 +33,7 @@ setup(
     author_email = "vowatchka@mail.ru",
     description = "JPath is easy way for selecting items from objects, that can be iterate by keys or indices (such as dictionaries or lists).",
 	long_description = read("README.rst"),
+	long_description_content_type = "text/x-rst",
     license = "MIT",
     keywords = "jpathpy python jpath json syntax selection select",
     url = "https://github.com/vowatchka/jpathpy",   # project home page, if any
