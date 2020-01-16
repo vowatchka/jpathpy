@@ -311,8 +311,8 @@ def parse(expr, start, output_dir=None, write_output=False, lextab=None, tabmodu
 		p[0] = p[1] + p[3]
 
 	def p_indices(p):
-		"""indices : INT DELIMPARAMS INT
-				   | indices DELIMPARAMS INT"""
+		"""indices : int DELIMPARAMS int
+				   | indices DELIMPARAMS int"""
 		# rule for parsing a list of indices
 		if str(p.slice[1]) == "indices":
 			p[0] = p[1] + [p[3]]
