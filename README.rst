@@ -355,11 +355,11 @@ r'$[@."key"]'                    >>> root.filter(
                                  >>> )                                           
 r'$[@."key" = "value"]'          >>> root.filter(                              available compare operations:
                                  >>>     lambda idx, cur, root :               ``>``, ``>=``, ``<``, ``<=``,
-                                 >>>         cur.one("key")[0] == "value"   ``=``, ``!=``
+                                 >>>         cur.one("key")[0] == "value"      ``=``, ``!=``
                                  >>> )
 r'$[@."key" + 1 > 3]'            >>> root.filter(                              available math operations:
                                  >>>     lambda idx, cur, root :               ``+``, ``-``, ``/``, ``*``,
-                                 >>>         cur.one("key")[0] + 1 > 3      ``%``
+                                 >>>         cur.one("key")[0] + 1 > 3         ``%``
                                  >>> )
 r'$[@."key" and $.."someKey"]'   >>> root.filter(                              available logic operations:
                                  >>>     lambda idx, cur, root :               ``and``, ``or``
