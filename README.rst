@@ -376,12 +376,12 @@ r'$[startswith(@, "value")]'     >>> root.call4self(                           j
 
 Use JPath functions
 -------------------
-You can call different functions from JPath expression. By default all new instances of ``jpathpy.JPath`` use class ``jpathpy.jpath_funcs.JPathFunctions``. This class provides methods that can be call as JPath function. For example:
+You can call different functions from JPath expression. By default all new instances of ``jpathpy.JPath`` use instance of ``jpathpy.jpath_funcs.JPathFunctions``. This class provides methods that can be call as JPath function. For example:
 
 >>> jpath(r'$.."author"[startswith(@, "E")]', jselection(d)).tuple()
 ('Evelyn Waugh', 'Edvard Munch')
 
-You can define your classes methods of which will be used as JPath functions. All that you need is inherit from class ``jpathpy.jpath_funcs.JPathFunctionsWrapper``. This class provides two protected methods:
+You can define your classes, methods of which will be used as JPath functions. All that you need it is inherit from class ``jpathpy.jpath_funcs.JPathFunctionsWrapper``. This class provides two protected methods:
 
 * ``_jpath_function(func)``
    It is decorator for decorate your methods as JPath function.
@@ -429,4 +429,4 @@ Follow example show how define yourself JPath functions:
 >>> jpath(r'$.."author"[firstchar(@) = "L" and lastchar(@) = "i"]', s).tuple()
 ('Leonardo Da Vinci',)
 
-Also you can inherit from ``jpathpy.jpath_funcs.JPathFunctions`` for expand it functionality.
+Also you can inherit from ``jpathpy.jpath_funcs.JPathFunctions`` for expand its functionality.
