@@ -68,9 +68,92 @@ OrderedDict([('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)])
 (1, 2, 3, 4, 5)
 
 
-Version
--------
-2.0.0
+Stat
+----
++----------------------------+---------------------------------+
+| Version                    | |pypi-version|                  |
++----------------------------+---------------------------------+
+| License                    | |github-license|                |
++----------------------------+---------------------------------+
+| Status                     | |pypi-dev-status|               |
++----------------------------+---------------------------------+
+| Languages                  | |github-language-count|         |
+|                            | |github-language-top|           |
++----------------------------+---------------------------------+
+| Python version             | |pypi-pyversions|               |
++----------------------------+---------------------------------+
+| Wheel                      | |pypi-wheel|                    |
++----------------------------+---------------------------------+
+| Downloads from ``pypi``    | |pypi-downloads|                |
++----------------------------+---------------------------------+
+| Latest GitHub release      | |github-latest-release|         |
++----------------------------+---------------------------------+
+| Release date               | |github-release-date|           |
++----------------------------+---------------------------------+
+| Last GitHub commit         | |github-last-commit-date|       |
++----------------------------+---------------------------------+
+| Open issues                | |github-open-issues|            |
++----------------------------+---------------------------------+
+| Closed issues              | |github-closed-issues|          |
++----------------------------+---------------------------------+
+| Open pull requests         | |github-open-pull-requests|     |
++----------------------------+---------------------------------+
+| Closed pull requests       | |github-closed-pull-requests|   |
++----------------------------+---------------------------------+
+
+.. |pypi-version| image:: https://img.shields.io/pypi/v/jpathpy
+	:target: https://pypi.org/project/jpathpy/
+	:alt: PyPI
+
+.. |github-license| image:: https://img.shields.io/github/license/vowatchka/jpathpy
+	:target: http://choosealicense.com/licenses/mit/
+	:alt: GitHub
+
+.. |pypi-dev-status| image:: https://img.shields.io/pypi/status/jpathpy
+	:alt: PyPI - Status
+
+.. |github-language-count| image:: https://img.shields.io/github/languages/count/vowatchka/jpathpy
+	:alt: GitHub language count
+
+.. |github-language-top| image:: https://img.shields.io/github/languages/top/vowatchka/jpathpy
+	:alt: GitHub top language
+
+.. |pypi-pyversions| image:: https://img.shields.io/pypi/pyversions/jpathpy
+	:target: https://www.python.org/downloads/
+	:alt: PyPI - Python Version
+
+.. |pypi-wheel| image:: https://img.shields.io/pypi/wheel/jpathpy
+	:alt: PyPI - Wheel
+
+.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/jpathpy
+	:alt: PyPI - Downloads
+
+.. |github-latest-release| image:: https://img.shields.io/github/v/release/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/releases
+	:alt: GitHub release (latest by date)
+
+.. |github-release-date| image:: https://img.shields.io/github/release-date/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/releases
+	:alt: GitHub Release Date
+
+.. |github-last-commit-date| image:: https://img.shields.io/github/last-commit/vowatchka/jpathpy
+	:alt: GitHub last commit
+
+.. |github-open-issues| image:: https://img.shields.io/github/issues/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/issues?q=is%3Aopen+is%3Aissue
+	:alt: GitHub issues
+
+.. |github-closed-issues| image:: https://img.shields.io/github/issues-closed/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/issues?q=is%3Aissue+is%3Aclosed
+	:alt: GitHub closed issues
+
+.. |github-open-pull-requests| image:: https://img.shields.io/github/issues-pr/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/pulls?q=is%3Aopen+is%3Apr
+	:alt: GitHub pull requests
+
+.. |github-closed-pull-requests| image:: https://img.shields.io/github/issues-pr-closed/vowatchka/jpathpy
+	:target: https://github.com/vowatchka/jpathpy/pulls?q=is%3Apr+is%3Aclosed
+	:alt: GitHub closed pull requests
 
 
 Install
