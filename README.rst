@@ -70,43 +70,54 @@ OrderedDict([('a', 1), ('b', 2), ('c', 3), ('d', 4), ('e', 5)])
 
 Stat
 ----
-+----------------------------+---------------------------------+
-| Name                       | jpathpy                         |
-+----------------------------+---------------------------------+
-| Version                    | |pypi-version|                  |
-+----------------------------+---------------------------------+
-| License                    | |github-license|                |
-+----------------------------+---------------------------------+
-| Author                     | Vladimir Saltykov               |
-|                            | <vowatchka@mail.ru>             |
-+----------------------------+---------------------------------+
-| Copyright                  | © since 2017                    |
-+----------------------------+---------------------------------+
-| Dev Status                 | |pypi-dev-status|               |
-+----------------------------+---------------------------------+
-| Languages                  | |github-language-count|         |
-|                            | |github-language-top|           |
-+----------------------------+---------------------------------+
-| Python version             | |pypi-pyversions|               |
-+----------------------------+---------------------------------+
-| Wheel                      | |pypi-wheel|                    |
-+----------------------------+---------------------------------+
-| Downloads from ``pypi``    | |pypi-downloads|                |
-+----------------------------+---------------------------------+
-| Latest GitHub release      | |github-latest-release|         |
-+----------------------------+---------------------------------+
-| Release date               | |github-release-date|           |
-+----------------------------+---------------------------------+
-| Last GitHub commit         | |github-last-commit-date|       |
-+----------------------------+---------------------------------+
-| Open issues                | |github-open-issues|            |
-+----------------------------+---------------------------------+
-| Closed issues              | |github-closed-issues|          |
-+----------------------------+---------------------------------+
-| Open pull requests         | |github-open-pull-requests|     |
-+----------------------------+---------------------------------+
-| Closed pull requests       | |github-closed-pull-requests|   |
-+----------------------------+---------------------------------+
++----------------------------------+-------------------------------------+
+| Name                             | jpathpy                             |
++----------------------------------+-------------------------------------+
+| Version                          | |pypi-version|                      |
++----------------------------------+-------------------------------------+
+| License                          | |github-license|                    |
++----------------------------------+-------------------------------------+
+| Author                           | Vladimir Saltykov                   |
+|                                  | <vowatchka@mail.ru>                 |
++----------------------------------+-------------------------------------+
+| Copyright                        | © since 2017                        |
++----------------------------------+-------------------------------------+
+| Dev Status                       | |pypi-dev-status|                   |
++----------------------------------+-------------------------------------+
+| Libraries.io SourceRank          | |libraries-io-source-rank|          |
++----------------------------------+-------------------------------------+
+| Dependency status                | |libraries-io-dependency|           |
++----------------------------------+-------------------------------------+
+| Dependents                       | |libraries-io-dependents|           |
++----------------------------------+-------------------------------------+
+| Languages                        | |github-language-count|             |
+|                                  | |github-language-top|               |
++----------------------------------+-------------------------------------+
+| Python version                   | |pypi-pyversions|                   |
++----------------------------------+-------------------------------------+
+| Wheel                            | |pypi-wheel|                        |
++----------------------------------+-------------------------------------+
+| Downloads from ``pypi``          | |pypi-downloads|                    |
++----------------------------------+-------------------------------------+
+| Downloads from ``sourceforge``   | |sourceforge-downloads|             |
++----------------------------------+-------------------------------------+
+| Downloads from ``github``        | |github-releases-downloads|         |
+|                                  | |github-latest-release-downloads|   |
++----------------------------------+-------------------------------------+
+| Latest GitHub release            | |github-latest-release|             |
++----------------------------------+-------------------------------------+
+| Release date                     | |github-release-date|               |
++----------------------------------+-------------------------------------+
+| Last GitHub commit               | |github-last-commit-date|           |
++----------------------------------+-------------------------------------+
+| Open issues                      | |github-open-issues|                |
++----------------------------------+-------------------------------------+
+| Closed issues                    | |github-closed-issues|              |
++----------------------------------+-------------------------------------+
+| Open pull requests               | |github-open-pull-requests|         |
++----------------------------------+-------------------------------------+
+| Closed pull requests             | |github-closed-pull-requests|       |
++----------------------------------+-------------------------------------+
 
 .. |pypi-version| image:: https://img.shields.io/pypi/v/jpathpy
 	:target: https://pypi.org/project/jpathpy/
@@ -118,6 +129,18 @@ Stat
 
 .. |pypi-dev-status| image:: https://img.shields.io/pypi/status/jpathpy
 	:alt: PyPI - Status
+	
+.. |libraries-io-source-rank| image:: https://img.shields.io/librariesio/sourcerank/pypi/jpathpy
+	:target: https://libraries.io/pypi/jpathpy/sourcerank
+	:alt: Libraries.io SourceRank
+	
+.. |libraries-io-dependency| image:: https://img.shields.io/librariesio/release/pypi/jpathpy
+	:target: https://libraries.io/pypi/jpathpy/tree
+	:alt: Libraries.io dependency status for latest release
+	
+.. |libraries-io-dependents| image:: https://img.shields.io/librariesio/dependents/pypi/jpathpy
+	:target: https://libraries.io/pypi/jpathpy/dependents
+	:alt: Dependents (via libraries.io)
 
 .. |github-language-count| image:: https://img.shields.io/github/languages/count/vowatchka/jpathpy
 	:alt: GitHub language count
@@ -133,10 +156,23 @@ Stat
 	:alt: PyPI - Wheel
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/jpathpy
+	:target: https://pypi.org/project/jpathpy/#files
 	:alt: PyPI - Downloads
+	
+.. |sourceforge-downloads| image:: https://img.shields.io/sourceforge/dm/jpathpy
+	:target: https://sourceforge.net/projects/jpathpy/files/
+	:alt: SourceForge - Downloads
+	
+.. |github-releases-downloads| image:: https://img.shields.io/github/downloads/vowatchka/jpathpy/total
+	:target: https://github.com/vowatchka/jpathpy/releases
+	:alt: GitHub All Releases - Downloads
+	
+.. |github-latest-release-downloads| image:: https://img.shields.io/github/downloads/vowatchka/jpathpy/latest/total
+	:target: https://github.com/vowatchka/jpathpy/releases/latest
+	:alt: GitHub Latest Release - Downloads
 
 .. |github-latest-release| image:: https://img.shields.io/github/v/release/vowatchka/jpathpy
-	:target: https://github.com/vowatchka/jpathpy/releases
+	:target: https://github.com/vowatchka/jpathpy/releases/latest
 	:alt: GitHub release (latest by date)
 
 .. |github-release-date| image:: https://img.shields.io/github/release-date/vowatchka/jpathpy
@@ -460,7 +496,7 @@ r'$[@."key" and $.."someKey"]'   >>> root.filter(                              a
                                  >>> )
 r'$[startswith(@, "value")]'     >>> root.call4self(                           jpath_funcs is instance of
                                  >>>     jpath_funcs.startswith, *("value",)   ``jpathpy.jpath_funcs.JPathFunctions``
-								 >>> )
+                                 >>> )
 ================================ ============================================= ======================================
 
 
