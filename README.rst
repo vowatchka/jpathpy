@@ -240,7 +240,7 @@ Use simple selection for select all items with key ``books`` on current level of
 For select all authors use deep selection.
 
 >>> s.one("author", deep=True).tuple()
-('Nigel Rees', 'Evelyn Waugh', 'Herman Melville', 'J. R. R. Tolkien')
+('Nigel Rees', 'Evelyn Waugh', 'Herman Melville', 'J. R. R. Tolkien', 'Leonardo Da Vinci', 'Edvard Munch', 'Sistine Chapel by Michelangelo', 'Vincent Van Gogh')
 
 
 Selection all keys
